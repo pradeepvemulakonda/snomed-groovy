@@ -1,8 +1,19 @@
-@Grab(group="org.neo4j", module="neo4j-rest-graphdb", version="1.9.M04")
-import org.neo4j.rest.graphdb.RestGraphDatabase
+@GrabResolver(name="neo4j", root="http://m2.neo4j.org/")
+@GrabResolver(name="restlet", root="http://maven.restlet.org/")
+@GrabConfig(systemClassLoader = true)
+@Grab('org.neo4j:neo4j-jdbc:1.9')
 
-def db = new RestGraphDatabase("http://localhost:7474/db/data")
-def node = db.getNodeById(0)
-println node
-db.shutdown()
+import groovy.sql.*
+
+def sql = Sql.newInstance('jdbc:neo4j://localhost:7474/')
+
+println "simple cypher statement"
+sql.eachRow("start n=node(*) return n") {
+	println "row $it"
+}
+
+println "parameterized cypher statement"
+sql.eachRow("start n=node({1}) return n", [0]) {
+	println "row $it"
+}
 println "Hello World"
