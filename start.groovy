@@ -5,7 +5,7 @@
 
 import groovy.sql.*
 
-def sql = Sql.newInstance('jdbc:neo4j://localhost:7474/')
+def sql = Sql.newInstance('jdbc:neo4j://172.28.5.0:7474/')
 
 println "simple cypher statement"
 sql.eachRow("start n=node(*) return n") {
