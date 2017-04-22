@@ -9,7 +9,7 @@ import static org.neo4j.driver.v1.Values.parameters
 start = System.currentTimeMillis()
 
 def neo4jDriver = new Neo4jConnection();
-neo4jDriver.connect("bolt://localhost:7687", "neo4j", "ramani456%")
+neo4jDriver.connect("bolt://172.28.5.0:7687", "neo4j", "neo4j")
 def pool = new CreateThreadPool()
 (1..10).each {
     def run = neo4jDriver.createObject("CREATE (a:Person {name: {name}, title: {title}})",
