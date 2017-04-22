@@ -1,3 +1,6 @@
+@Grab(group="org.neo4j", module="neo4j-jdbc", version="3.0.1")
+@Grab(group="org.neo4j", module="neo4j-jdbc-driver", version="3.0.1")
+@Grab(group="org.neo4j.driver", module="neo4j-java-driver", version="1.1.2")
 import org.neo4j.driver.v1.*
 
 /**
