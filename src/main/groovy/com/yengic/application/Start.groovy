@@ -8,7 +8,7 @@ import static org.neo4j.driver.v1.Values.parameters
 
 start = System.currentTimeMillis()
 
-def neo4jDriver = new Neo4jConnection();
+def neo4jDriver = new Neo4jConnection()
 neo4jDriver.connect("bolt://localhost:7687", "neo4j", "ramani456%")
 def pool = new CreateThreadPool()
 

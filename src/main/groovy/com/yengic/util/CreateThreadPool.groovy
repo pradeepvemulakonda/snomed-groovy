@@ -2,6 +2,7 @@ package com.yengic.util
 
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
+import java.util.concurrent.Future
 import java.util.concurrent.FutureTask
 
 /**
@@ -9,7 +10,7 @@ import java.util.concurrent.FutureTask
  */
 class CreateThreadPool implements AutoCloseable {
     def threadPool = Executors.newFixedThreadPool(150)
-    List<FutureTask> futureTasks = new ArrayList<>()
+    List<Future> futureTasks = new ArrayList<>()
 
     def start = {closure ->
         futureTasks.push(threadPool.submit( closure as Callable ))

@@ -3,8 +3,6 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'groovy'
 apply plugin: 'java'
-apply plugin:'application'
-mainClassName = 'Start'
 
 
 sourceCompatibility = 1.8
@@ -19,6 +17,9 @@ dependencies {
     compile 'org.neo4j:neo4j-jdbc-driver:3.0.1'
     compile 'org.neo4j.driver:neo4j-java-driver:1.1.2'
     compile 'org.apache.ivy:ivy:2.2.0'
+    compile 'redis.clients:jedis:2.9.0'
+    compile 'com.google.inject:guice:4.1.0'
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile "org.mockito:mockito-core:2.+"
 }

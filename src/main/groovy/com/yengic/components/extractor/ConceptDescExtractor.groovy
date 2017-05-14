@@ -3,8 +3,8 @@ package com.yengic.components.extractor
 import com.yengic.common.BaseSnomedFileReader
 import com.yengic.common.DescElement
 import com.yengic.common.SnomedRef
-import com.yengic.util.RelToLabelConverter
-import sun.security.krb5.internal.crypto.Des
+
+import javax.inject.Inject
 
 /**
  * Created by l080747 on 28/04/2017.
@@ -13,9 +13,17 @@ import sun.security.krb5.internal.crypto.Des
 
 class ConceptDescExtractor {
 
+    BaseSnomedFileReader baseFileReader
+
+    SnomedRef sr
+
+    @Inject
+    ConceptDescExtractor(BaseSnomedFileReader baseFileReader, SnomedRef sr) {
+        this.baseFileReader = baseFileReader
+        this.sr = sr
+    }
+
     def extract(filePath) {
-        SnomedRef sr = SnomedRef.instance
-        def baseFileReader = new BaseSnomedFileReader()
         baseFileReader.readAndProcess(filePath, {
             values ->
                 def conceptId = values[4]

@@ -10,7 +10,7 @@ class Neo4jConnection implements AutoCloseable {
     Driver driver
 
     def connect(url, userName = 'neo4j', password = 'neo4j') {
-        driver = GraphDatabase.driver(url, AuthTokens.basic(userName, password))
+        driver = GraphDatabase.driver(url, AuthTokens.basic(userName, password) as Config)
     }
 
     @Override
