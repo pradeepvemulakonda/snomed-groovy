@@ -1,4 +1,5 @@
 import com.yengic.common.BaseSnomedFileReader
+import com.yengic.common.DescElement
 import com.yengic.common.SnomedRef
 import com.yengic.components.extractor.ConceptDescExtractor
 import org.junit.Assert
@@ -34,7 +35,7 @@ class DescExtractorTest {
             @Override
             Object answer(InvocationOnMock invocation) throws Throwable {
                 Closure closure = (Closure)invocation.arguments[1]
-                String[] values = ["1234", "1234", "1234", "1234", "1234", "1234", "1234", "1234"]
+                String[] values = ["101013","20020131","1","900000000000207008","126813005","en","900000000000013009","Neoplasm of anterior aspect of epiglottis","900000000000020002"]
                 closure values
                 return null
             }
@@ -50,7 +51,6 @@ class DescExtractorTest {
         conceptDescExtractor.extract("test")
         verify(sr, times(2)).mapOfDesc
         verify(baseFileReader).readAndProcess(anyString(), any(Closure.class))
-
         Assert.assertEquals(1, sr.mapOfDesc.size())
     }
 }

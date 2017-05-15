@@ -10,14 +10,14 @@ class DescElement {
     public static final String SYNONYM = "900000000000013009"
     def label
     def synonym = []
-    def fsa
+    def fsn
     def description = []
 
     def build(values) {
         def descType = values[6]
         def term = values[7]
         if (isFSN(descType)) {
-            this.fsa = term
+            this.fsn = term
             this.label = RelToLabelConverter.instance.convert(term)
         } else if (isSynonym(descType)) {
             this.synonym << term

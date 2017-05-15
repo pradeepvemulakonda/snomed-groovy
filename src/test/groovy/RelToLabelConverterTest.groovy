@@ -9,11 +9,11 @@ import static org.junit.Assert.*
  */
 class RelToLabelConverterTest {
 
-    def RelToLabelConverter converter;
+    RelToLabelConverter converter
 
     @Before
     void setUp(){
-        converter = RelToLabelConverter.newInstance()
+        converter = RelToLabelConverter.instance
     }
 
     @Test
