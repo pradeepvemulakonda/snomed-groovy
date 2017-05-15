@@ -1,7 +1,8 @@
+package com.yengic.extract
+
 import com.yengic.common.BaseSnomedFileReader
-import com.yengic.common.DescElement
 import com.yengic.common.SnomedRef
-import com.yengic.components.extractor.ConceptDescExtractor
+import com.yengic.components.extractor.RelationshipTypeExtractor
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -21,13 +22,13 @@ import static org.mockito.Mockito.*
  */
 
 @RunWith(MockitoJUnitRunner)
-class DescExtractorTest {
+class ResExtractorTest {
 
     @Mock BaseSnomedFileReader baseFileReader
 
     @Mock SnomedRef sr
 
-    @InjectMocks ConceptDescExtractor conceptDescExtractor
+    @InjectMocks RelationshipTypeExtractor relTypeExtractor
 
     @Before
     void setUp() {
@@ -48,9 +49,9 @@ class DescExtractorTest {
 
     @Test
     void executeTest() {
-        conceptDescExtractor.extract("test")
-        verify(sr, times(2)).mapOfDesc
+        relTypeExtractor.extract("test")
+        verify(sr, times(2)).setOfRefTermId
         verify(baseFileReader).readAndProcess(anyString(), any(Closure.class))
-        Assert.assertEquals(1, sr.mapOfDesc.size())
+        Assert.assertEquals(1, sr.setOfRefTermId.size())
     }
 }

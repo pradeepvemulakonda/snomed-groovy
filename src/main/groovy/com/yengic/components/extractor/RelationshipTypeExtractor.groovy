@@ -23,7 +23,8 @@ class RelationshipTypeExtractor {
     }
 
     def extract(filePath) {
-        baseFileReader.readAndProcess(filePath, {
+        def file = new File(filePath)
+        baseFileReader.readAndProcess(file, {
             values ->
                 sr.setOfRefTermId << values[7]
         })

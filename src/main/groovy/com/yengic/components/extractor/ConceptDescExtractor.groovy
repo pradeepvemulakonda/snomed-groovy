@@ -24,7 +24,8 @@ class ConceptDescExtractor {
     }
 
     def extract(filePath) {
-        baseFileReader.readAndProcess(filePath, {
+        def file = new File(filePath)
+        baseFileReader.readAndProcess(file, {
             values ->
                 def conceptId = values[4]
                 if (!sr.mapOfDesc.containsKey(conceptId)) {

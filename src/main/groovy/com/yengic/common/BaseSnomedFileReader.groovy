@@ -4,14 +4,13 @@ import groovy.time.TimeCategory
 import groovy.time.TimeDuration
 
 /**
- * Created by l080747 on 28/04/2017.
+ * Created by Pradeep on 28/04/2017.
  */
 
 class BaseSnomedFileReader {
 
-    def readAndProcess(filePath, Closure closure) {
+    def readAndProcess(file, Closure closure) {
         Date start = new Date()
-        def file = new File(filePath)
         file.withReader {
             it.eachLine {
                 line, number ->
