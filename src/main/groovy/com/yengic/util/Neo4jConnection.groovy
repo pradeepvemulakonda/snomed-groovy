@@ -3,14 +3,14 @@ package com.yengic.util
 import org.neo4j.driver.v1.*
 
 /**
- * Created by L080747 on 13/04/2017.
+ * Created by Pradeep on 13/04/2017.
  */
 class Neo4jConnection implements AutoCloseable {
 
     Driver driver
 
-    def connect(url, userName = 'neo4j', password = 'neo4j') {
-        driver = GraphDatabase.driver(url, AuthTokens.basic(userName, password) as Config)
+    def connect(String url, String userName = 'neo4j',String password = 'neo4j') {
+        driver = GraphDatabase.driver(url, AuthTokens.basic(userName, password))
     }
 
     @Override
@@ -22,6 +22,14 @@ class Neo4jConnection implements AutoCloseable {
         return {
             Session session = driver.session()
             session.run(query, param)
+            session.close()
+        }
+    }
+
+    def createIndex(String query) {
+        return {
+            Session session = driver.session()
+            session.run(query)
             session.close()
         }
     }

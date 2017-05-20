@@ -1,21 +1,33 @@
 package com.yengic.application
 
-import com.google.inject.Guice
-import com.google.inject.Injector
-import com.yengic.common.SnomedModule
-import com.yengic.components.extractor.ConceptDescExtractor
-import com.yengic.components.extractor.RelationshipTypeExtractor
+import com.yengic.components.builder.Neo4jCommandExecutor
+import com.yengic.util.Neo4jConnection
+import com.yengic.util.ThreadPoolExecutor
+import org.neo4j.driver.v1.StatementResult
 
-/**
- * Created by l080747 on 28/04/2017.
- */
+import static org.neo4j.driver.v1.Values.parameters
 
-Injector injector = Guice.createInjector(new SnomedModule())
-def conceptExtractor = injector.getInstance(ConceptDescExtractor.class)
-def relExtractor = injector.getInstance(RelationshipTypeExtractor.class)
+start = System.currentTimeMillis()
 
-conceptExtractor.extract("/Users/Harita/IdeaProjects/snomed-groovy-new/src/main/resources/sct2_Description_Snapshot-en_INT_20170131.txt")
-relExtractor.extract("/Users/Harita/IdeaProjects/snomed-groovy-new/src/main/resources/sct2_Description_Snapshot-en_INT_20170131.txt")
+def neo4jDriver = new Neo4jConnection()
+neo4jDriver.connect("bolt://localhost:7687", "neo4j", "ramani456%")
+def pool = new ThreadPoolExecutor()
+Neo4jCommandExecutor executor = new Neo4jCommandExecutor(neo4jDriver, pool)
+(1..10).each {
+    def run = executor.connection.createObject("CREATE (a:Person {name: {name}, title: {title}})",
+            parameters("name", "Arthur", "title", "King"))
+    executor.execute(run)
+}
 
-//print new com.yengic.util.JedisClient().connect().getDescription("126813005")
+executor.executor.waitForThreadsToComplete()
 
+StatementResult result = neo4jDriver.getObject("MATCH (a:Person) WHERE a.name = {name} " +
+        "RETURN a.name AS name, a.title AS title",
+        parameters("name", "Arthur"))
+result.each { record ->
+    System.out.println(record.get("title").asString() + " " + record.get("name").asString())
+}
+now = System.currentTimeMillis()
+neo4jDriver.close()
+pool.close()
+println now - start

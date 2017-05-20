@@ -27,8 +27,6 @@ class DescExtractorTest {
 
     @Mock BaseSnomedFileReader baseFileReader
 
-    @Mock SnomedRef sr
-
     @InjectMocks ConceptDescExtractor conceptDescExtractor
 
     @Before
@@ -43,16 +41,11 @@ class DescExtractorTest {
             }
         })
 
-        when(sr.mapOfDesc).thenReturn([:])
-        when(sr.setOfRefTermId).thenReturn([] as Set)
-        when(sr.mapOfRef).thenReturn([:])
     }
 
     @Test
     void executeTest() {
         conceptDescExtractor.extract("test")
-        verify(sr, times(2)).mapOfDesc
         verify(baseFileReader).readAndProcess(anyString(), any(Closure.class))
-        Assert.assertEquals(1, sr.mapOfDesc.size())
     }
 }

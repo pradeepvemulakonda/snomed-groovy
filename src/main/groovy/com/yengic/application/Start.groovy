@@ -1,37 +1,31 @@
 package com.yengic.application
 
-import com.yengic.util.CreateThreadPool
-import com.yengic.util.Neo4jConnection
-import org.neo4j.driver.v1.StatementResult
+import com.google.inject.Guice
+import com.google.inject.Injector
+import com.yengic.common.SnomedModule
+import com.yengic.common.SnomedRef
+import com.yengic.components.extractor.ConceptDescExtractor
+import com.yengic.components.uploader.RelationshipUploader
+import groovy.time.TimeCategory
+import groovy.time.TimeDuration
 
-import static org.neo4j.driver.v1.Values.parameters
+start = new Date()
+Injector injector = Guice.createInjector(new SnomedModule())
+def conceptExtractor = injector.getInstance(ConceptDescExtractor.class)
 
-start = System.currentTimeMillis()
+conceptExtractor.extract("C:\\MavenCode\\git\\snomed-groovy\\files\\SnomedCT_InternationalRF2_Production_20170131T120000\\Snapshot\\Terminology\\sct2_Description_Snapshot-en_INT_20170131.txt")
+SnomedRef snomedRef = SnomedRef.instance
+//def indexCreator = injector.getInstance(IndexCreator.class)
+//indexCreator.upload(snomedRef)
+//def conceptUpdater = injector.getInstance(ConceptUploader.class)
+//conceptUpdater.upload(snomedRef)
+//
+//def relExtractor = injector.getInstance(RelationshipTypeExtractor.class)
+//relExtractor.extract("C:\\MavenCode\\git\\snomed-groovy\\files\\SnomedCT_InternationalRF2_Production_20170131T120000\\Snapshot\\Terminology\\sct2_Relationship_Snapshot_INT_20170131.txt")
 
-def neo4jDriver = new Neo4jConnection()
-neo4jDriver.connect("bolt://localhost:7687", "neo4j", "ramani456%")
-def pool = new CreateThreadPool()
+def relUploader = injector.getInstance(RelationshipUploader.class)
+relUploader.upload(snomedRef, "C:\\MavenCode\\git\\snomed-groovy\\files\\SnomedCT_InternationalRF2_Production_20170131T120000\\Snapshot\\Terminology\\sct2_Relationship_Snapshot_INT_20170131.txt")
 
-statement = Template("CREATE (c:Concept:FSA:$label {conceptId: \"$id\", term: \"$term\", descType: $descType});")
-create_index_concept_id = "CREATE INDEX ON :Concept(conceptId)"
-create_index_term = "CREATE INDEX ON :Concept(term)"
-
-
-(1..10).each {
-    def run = neo4jDriver.createObject("CREATE (a:Person {name: {name}, title: {title}})",
-            parameters("name", "Arthur", "title", "King"))
-    pool.start(run)
-}
-
-pool.futureTasks.each { it.get() }
-
-StatementResult result = neo4jDriver.getObject("MATCH (a:Person) WHERE a.name = {name} " +
-        "RETURN a.name AS name, a.title AS title",
-        parameters("name", "Arthur"))
-result.each { record ->
-    System.out.println(record.get("title").asString() + " " + record.get("name").asString())
-}
-now = System.currentTimeMillis()
-neo4jDriver.close()
-pool.close()
-println now - start
+now = new Date()
+TimeDuration td = TimeCategory.minus( now, start )
+print td
