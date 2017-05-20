@@ -14,20 +14,17 @@ class RelationshipTypeExtractor {
 
     BaseSnomedFileReader baseFileReader
 
-    SnomedRef sr
 
     @Inject
-    RelationshipTypeExtractor(BaseSnomedFileReader baseFileReader, SnomedRef sr) {
+    RelationshipTypeExtractor(BaseSnomedFileReader baseFileReader) {
         this.baseFileReader = baseFileReader
-        this.sr = sr
     }
 
     def extract(filePath) {
-        def file = new File(filePath)
-        baseFileReader.readAndProcess(file, {
+        def sr = SnomedRef.instance
+        baseFileReader.readAndProcess(filePath, {
             values ->
                 sr.setOfRefTermId << values[7]
         })
-        print sr.setOfRefTermId
     }
 }

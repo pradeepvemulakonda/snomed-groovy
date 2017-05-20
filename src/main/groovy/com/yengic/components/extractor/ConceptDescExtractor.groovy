@@ -15,17 +15,14 @@ class ConceptDescExtractor {
 
     BaseSnomedFileReader baseFileReader
 
-    SnomedRef sr
-
     @Inject
-    ConceptDescExtractor(BaseSnomedFileReader baseFileReader, SnomedRef sr) {
+    ConceptDescExtractor(BaseSnomedFileReader baseFileReader) {
         this.baseFileReader = baseFileReader
-        this.sr = sr
     }
 
     def extract(filePath) {
-        def file = new File(filePath)
-        baseFileReader.readAndProcess(file, {
+        def sr = SnomedRef.instance
+        baseFileReader.readAndProcess(filePath, {
             values ->
                 def conceptId = values[4]
                 if (!sr.mapOfDesc.containsKey(conceptId)) {
