@@ -9,8 +9,9 @@ import groovy.time.TimeDuration
 
 class BaseSnomedFileReader {
 
-    def readAndProcess(file, Closure closure) {
+    def readAndProcess(filePath, Closure closure) {
         Date start = new Date()
+        def file = new File(filePath)
         file.withReader {
             it.eachLine {
                 line, number ->

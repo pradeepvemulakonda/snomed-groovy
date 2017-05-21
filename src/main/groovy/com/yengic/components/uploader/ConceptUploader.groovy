@@ -9,7 +9,7 @@ import javax.inject.Inject
 import static org.neo4j.driver.v1.Values.parameters
 
 /**
- * Created by Harita on 14/5/17.
+ * Created by Pradeep on 14/5/17.
  */
 class ConceptUploader implements Uploader {
 

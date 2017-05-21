@@ -1,6 +1,6 @@
 package com.yengic.redis
 
-import com.yengic.util.CreateThreadPool
+import com.yengic.util.ThreadPoolExecutor
 import redis.clients.jedis.*
 
 /**
@@ -10,10 +10,10 @@ class TestRedis {
 
     def test() {
         Jedis jedis = new Jedis("0.0.0.0")
-        def pool = new CreateThreadPool()
+        def pool = new ThreadPoolExecutor()
 
         (1..5000000).each {
-            i-> pool.start({
+            i-> pool.execute({
                 jedis.set("hello", "yello")
             })
             if(i==5000000)

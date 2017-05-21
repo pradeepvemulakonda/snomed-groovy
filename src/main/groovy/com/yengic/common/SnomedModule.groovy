@@ -12,7 +12,6 @@ class SnomedModule extends AbstractModule{
     @Override
     protected void configure() {
         bind(BaseSnomedFileReader.class)
-        bind(SnomedRef.class).asEagerSingleton()
         bind(ElasticClient.class).asEagerSingleton()
     }
 }
