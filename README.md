@@ -11,17 +11,17 @@ This code does the following
    3) Description
   
 2) Create a list of Relationship types. To be used to add labels for relationships between nodes.
-3) In the initial run create concepts with FSA
-4) In the second run update all Synonyms and descriptions onto the existing concepts.
-5) In the third run setup the relationships between the concepts.
-6) Each of the Concept and Relationship will be indexed both on the description text as well as the Label.
-7) Concepts will have a "Concept" label.
-8) Relationship will have a "Relationship" label.
+3) In the initial run create concepts with FSA, list of synoyms and descriptions.
+4) In the third run setup the relationships between the concepts.
+5) Each of the Concept and Relationship will be indexed both on the description text as well as the Label.
+6) Concepts will have a "Concept" label.
+7) Relationship will have a specific relationship label.
 
 # MVP:
-Get a Neo4j Database populated with SNOMED-CT international version.
+Get a Neo4j Database populated with SNOMED-CT international version. (/)
 
 # Nice to have:
+Add an automcomplete, fuzzy search functionality => Created an Elastic search instance with neo4j data.
 Update uploaded nodes with Reference sets data.
 
 # Next Release:
