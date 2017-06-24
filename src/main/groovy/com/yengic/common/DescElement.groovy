@@ -12,6 +12,7 @@ class DescElement {
     def synonym = []
     def fsn
     def description = []
+    def active
 
     def build(values) {
         def descType = values[6]
