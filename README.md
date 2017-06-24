@@ -5,6 +5,8 @@ Groovy script to load snomed data into a neo4j container
 * Neo4j at port location: "bolt://localhost:7687", userName: "neo4j", password: "neo4j or what ever you have".Change it in ApplicationProperties
 * Install elastic search at the default port
 
+** To start the upload => run Start.groovy
+
 As Neo4j does not index the text, we are using elastic search to index the text and use the conceptId to zero in on a node in Neo4j. Once we and on a node we can navigate tthrough the graph to get the required data and relationships.
 
 Create a simple to setup - set of docker container to populate snomed-ct data into the Neo4j Database.
